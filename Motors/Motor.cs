@@ -28,5 +28,10 @@ namespace Motors
         public int ReleaseYear { get => releaseYear; }
         public double Performance { get => performance; }
         public double PriceInEur { get => priceInEur; }
+
+        public override string? ToString()
+        {
+            return $"{this.Brand} {this.Name} {this.ReleaseYear} {this.Performance} {this.PriceInEur}";
+        }
     }
 }

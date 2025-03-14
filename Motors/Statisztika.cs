@@ -35,14 +35,12 @@ namespace Motors
         public bool Contains(string motorName) 
         {
             bool tempBool = false;
-            while (tempBool == false)
+
+            foreach (Motor motor in motors)
             {
-                foreach (Motor motor in motors)
+                if (motor.Name == motorName)
                 {
-                    if (motor.Name.Equals(motorName))
-                    {
-                        tempBool = true;
-                    }
+                    tempBool = true;
                 }
             }
             return tempBool;
@@ -66,7 +64,7 @@ namespace Motors
             List<Motor> brandMotors = [];
             foreach (Motor motor in motors)
             {
-                if (motor.Name.Equals(brandName))
+                if (motor.Brand.Equals(brandName))
                 {
                     brandMotors.Add(motor);
                 }
