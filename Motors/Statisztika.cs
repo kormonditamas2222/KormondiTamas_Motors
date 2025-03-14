@@ -9,19 +9,21 @@ namespace Motors
     internal class Statisztika
     {
         List<Motor> motors = [];
-        
+
+        internal List<Motor> Motors { get => motors; }
+
         public void ReadFromFile(string fileName)
         {
             StreamReader sr = new(fileName);
             sr.ReadLine();
             while (!sr.EndOfStream)
             {
-                string[] line = sr.ReadLine()!.Split(";");
+                string[] line = sr.ReadLine().Split(";");
                 Motor motor = new(line[0], line[1], Convert.ToInt16(line[2]), Convert.ToDouble(line[3]), Convert.ToDouble(line[4]));
                 motors.Add(motor);
             }
         }
-        public int SumPrices()
+        public int SumPrices(List<Motor> motors)
         {
             int sum = 0;
             foreach (Motor motor in motors)
@@ -61,20 +63,23 @@ namespace Motors
         }
         public int SumBasedOnBrand(string brandName)
         {
-            int sum = 0;
-            foreach(Motor motor in motors)
+            List<Motor> brandMotors = [];
+            foreach (Motor motor in motors)
             {
-                if (motor.Brand == brandName)
+                if (motor.Name.Equals(brandName))
                 {
-                    sum += Convert.ToInt32(motor.PriceInEur);
+                    brandMotors.Add(motor);
                 }
             }
-            return sum;
+            return SumPrices(brandMotors);
         }
         public void Sort()
         {
-            motors = motors.OrderBy(m => m.Performance).ToList();
-            motors.Reverse();
+            motors = motors.OrderByDescending(m => m.Performance).ToList();
+            foreach (Motor motor in motors)
+            {
+                Console.WriteLine(motor);
+            }
         }
     }
 }
